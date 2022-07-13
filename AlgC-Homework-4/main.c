@@ -14,7 +14,7 @@
 
 void solution1();
 void solution2();
-//void solution3();
+void solution3();
 //void solution4();
 //void solution5();
 void menu();
@@ -36,9 +36,9 @@ void menu() {
         case 2:
             solution2();
             break;
-//        case 3:
-//            solution3();
-//            break;
+        case 3:
+            solution3();
+            break;
 //        case 4:
 //            solution4();
 //            break;
@@ -177,3 +177,142 @@ void solution2() {
     print(m, n);
     printf("\n");
 }
+
+
+#define X 7
+#define Y 7
+
+void printBoard(int a[X][Y]) {
+    for (int i = 0; i < X; i++) {
+        for (int j = 0; j < Y; j++) {
+            printf("%4d", a[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int count = 1;
+long unsigned counter = 0;
+int board[X][Y];
+
+int checkHorse(int positionX, int positionY) {
+    if (positionX < 0 || positionY < 0 || positionX > X-1 || positionY > Y-1) {
+        return 0;
+    }
+    if (board[positionX][positionY] != 0) {
+        return 0;
+    } else
+    return 1;
+}
+
+int searchSolution(int currentX, int currentY) {
+    counter++;
+    printf("%d %lu\n", count, counter);
+    //printBoard(board);
+    if (checkHorse(currentX-1, currentY-2) == 1) {
+        board[currentX-1][currentY-2] = 1;
+        count++;
+        if (count == X*Y) {
+            return 1;
+        }
+        if (searchSolution(currentX-1, currentY-2) == 1) {
+            return 1;
+        }
+    }
+    if (checkHorse(currentX-2, currentY-1) == 1) {
+        board[currentX-2][currentY-1] = 1;
+        count++;
+        if (count == X*Y) {
+            return 1;
+        }
+        if (searchSolution(currentX-2, currentY-1) == 1) {
+            return 1;
+        }
+    }
+    if (checkHorse(currentX-2, currentY+1) == 1) {
+        board[currentX-2][currentY+1] = 1;
+        count++;
+        if (count == X*Y) {
+            return 1;
+        }
+        if (searchSolution(currentX-2, currentY+1) == 1) {
+            return 1;
+        }
+    }
+    if (checkHorse(currentX-1, currentY+2) == 1) {
+        board[currentX-1][currentY+2] = 1;
+        count++;
+        if (count == X*Y) {
+            return 1;
+        }
+        if (searchSolution(currentX-1, currentY+2) == 1) {
+            return 1;
+        }
+    }
+    if (checkHorse(currentX+1, currentY+2) == 1) {
+        board[currentX+1][currentY+2] = 1;
+        count++;
+        if (count == X*Y) {
+            return 1;
+        }
+        if (searchSolution(currentX+1, currentY+2) == 1) {
+            return 1;
+        }
+    }
+    if (checkHorse(currentX+2, currentY+1) == 1) {
+        board[currentX+2][currentY+1] = 1;
+        count++;
+        if (count == X*Y) {
+            return 1;
+        }
+        if (searchSolution(currentX+2, currentY+1) == 1) {
+            return 1;
+        }
+    }
+    if (checkHorse(currentX+2, currentY-1) == 1) {
+        board[currentX+2][currentY-1] = 1;
+        count++;
+        if (count == X*Y) {
+            return 1;
+        }
+        if (searchSolution(currentX+2, currentY-1) == 1) {
+            return 1;
+        }
+    }
+    if (checkHorse(currentX+1, currentY-2) == 1) {
+        board[currentX+1][currentY-2] = 1;
+        count++;
+        if (count == X*Y) {
+            return 1;
+        }
+        if (searchSolution(currentX+1, currentY-2) == 1) {
+            return 1;
+        }
+    }
+    count--;
+    board[currentX][currentY] = 0;
+    return 0;
+}
+
+void solution3() {
+    
+    for (int i = 0; i < X; i++) {
+        for (int j = 0; j < Y; j++) {
+            board[i][j] = 0;
+        }
+    }
+    board[0][0] = 1;
+    
+    printf("Start matrix: \n");
+    printBoard(board);
+    
+    if (searchSolution(0, 0) == 1) {
+        printf("WIN\n");
+        printBoard(board);
+        printf("%d\n", count);
+    }
+}
+
+
+
+
